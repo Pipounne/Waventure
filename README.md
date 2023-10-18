@@ -1,4 +1,4 @@
-# Waily
+# Waventure
 
 CARRE Arthur - Engineering college Leonard De Vinci - arthur@carreo.fr  
 LEDRU Solal - Engineering college Leonard De Vinci - solal.ledru@edu.devinci.fr  
