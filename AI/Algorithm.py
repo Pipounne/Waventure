@@ -73,4 +73,4 @@ TheoricalMovment((0,0),exemple,mouvment)
 for i in range(7):
         for j in range(7):
             print(mouvment[i][j],end = "")
-        print("")A
+        print("")
