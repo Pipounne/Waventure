@@ -37,10 +37,6 @@ def print_board(board):
         print("")
 
 
-
-#print_board(exemple2)
-
-
 def remplissage(character) :
     characters = character[7][7]
     for i in range(7):
