@@ -14,7 +14,7 @@ class character:
 
 exemple = [['/' for j in range (7)] for i in range(7)]
 
-exemple[0][0] = character("Arti Ficelle","0",True,391,35,3,(4,4))
+exemple[0][0] = character("Arti Ficelle","0",True,391,35,3,(0,0))
 exemple[5][4] = character("Tofu 1","1",False,120,30,3,(5,4))
 exemple[4][5] = character("Tofu 2","2",False,110,32,3,(4,5))
 
