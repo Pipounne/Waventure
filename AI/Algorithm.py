@@ -139,15 +139,20 @@ def foes_simulation(board,perso):
                 board[mainpos[0] + 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
+
             elif(mouvment[mainpos[0]][mainpos[1]+1] == 1):
                 board[mainpos[0]][mainpos[1]+1] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
+
             elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
                 board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
+
             elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
                 board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
+
+def move_simulation(previous_boards):
