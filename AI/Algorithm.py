@@ -1,4 +1,3 @@
-
 #We create a character class to gather all the data extracted from the game
 class character:
     def __init__(self,name,ID,ally,PV,atk,PM,position) -> None:
@@ -116,3 +115,41 @@ for i in range (7):
 
 print(melee_count(exemple2[0].position,exemple2,"0"))
 
+def calcul(board,newboard) :
+    result = 0
+    for i in range(board.len):
+        if (i == 1):
+            if(newboard[i].PV <= 0):
+                result = result-10000
+            else:
+                result = result - (board[i].PV - newboard[i].PV)
+        else:
+            if(newboard[i].PV <= 0):
+                result = result + 2000 + newboard[i].atk
+            else:
+                result = result + 5*(board[i].PV - newboard[i].PV )
+    return result
+
+
+def attack(board,perso):
+    mainpos = perso[0].position
+    for i in range(perso.len000):
+        if (i!=0):
+            TheoricalMovment(perso[i].position,board,mouvment,n=perso[i].PM)
+            if(mouvment[mainpos[0] + 1][mainpos[1]] == 1):
+                board[mainpos[0] + 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0]][mainpos[1]+1] == 1):
+                board[mainpos[0]][mainpos[1]+1] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
+                board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
+                board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+    
