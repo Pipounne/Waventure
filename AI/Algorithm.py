@@ -130,7 +130,6 @@ def calcul(board,newboard) :
                 result = result + 5*(board[i].PV - newboard[i].PV )
     return result
 
-
 def attack(board,perso):
     mainpos = perso[0].position
     for i in range(perso.len000):
@@ -152,4 +151,3 @@ def attack(board,perso):
                 board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
-    
