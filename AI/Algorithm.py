@@ -86,7 +86,7 @@ def launch_simulation(previous_boards = [],n = 1):
         all_boards = spell_simulation(all_boards)
         all_boards = foes_simulation(all_boards)
         for i in all_boards:
-            i.score = fonction_score(i)
+            i.score = score_calcul(i)
         launch_simulation(all_boards,n-1)
     else:
         if(len(previous_boards)>0):
@@ -115,7 +115,7 @@ for i in range (7):
 
 print(melee_count(exemple2[0].position,exemple2,"0"))
 
-def calcul(board,newboard) :
+def score_calcul(board,newboard) :
     result = 0
     for i in range(board.len):
         if (board[i].ID == 0):
@@ -130,7 +130,7 @@ def calcul(board,newboard) :
                 result = result + 5*(board[i].PV - newboard[i].PV )
     return result
 
-def attack(board,perso):
+def foes_simulation(board,perso):
     mainpos = perso[0].position
     for i in range(perso.len000):
         if (i!=0):
