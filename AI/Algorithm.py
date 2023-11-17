@@ -118,7 +118,7 @@ print(melee_count(exemple2[0].position,exemple2,"0"))
 def calcul(board,newboard) :
     result = 0
     for i in range(board.len):
-        if (i == 1):
+        if (board[i].ID == 0):
             if(newboard[i].PV <= 0):
                 result = result-10000
             else:
@@ -129,7 +129,6 @@ def calcul(board,newboard) :
             else:
                 result = result + 5*(board[i].PV - newboard[i].PV )
     return result
-
 
 def attack(board,perso):
     mainpos = perso[0].position
@@ -152,4 +151,3 @@ def attack(board,perso):
                 board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
                 board[perso[i].position[0]][perso[i].position[1]] = 0
                 perso[0].PV = perso[0].PV-perso[i].atk
-    
