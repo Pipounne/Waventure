@@ -132,7 +132,7 @@ def score_calcul(board,newboard) :
 
 def foes_simulation(board,perso):
     mainpos = perso[0].position
-    for i in range(perso.len000):
+    for i in range(perso.len):
         if (i!=0):
             TheoricalMovment(perso[i].position,board,mouvment,n=perso[i].PM)
             if(mouvment[mainpos[0] + 1][mainpos[1]] == 1):
