@@ -13,7 +13,6 @@ class character:
 
 #We create a board class to set a template for all our generated boards
 class board:
-    def _init_(self,board_ID,char_list,instruction_list) -> None:
         self.board_ID = board_ID                    #The unique ID of the board build on parents boards if any
         self.char_list = char_list                  #The list of all charcaters on board
         self.instruction_list = instruction_list    #The list of instructions required to reach the board
