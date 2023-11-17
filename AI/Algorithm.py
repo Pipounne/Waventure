@@ -118,7 +118,7 @@ print(melee_count(exemple2[0].position,exemple2,"0"))
 def calcul(board,newboard) :
     result = 0
     for i in range(board.len):
-        if (i == 1):
+        if (board[i].ID == 0):
             if(newboard[i].PV <= 0):
                 result = result-10000
             else:
