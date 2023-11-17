@@ -1,5 +1,3 @@
-from numpy import * as np 
-
 #We create a character class to gather all the data extracted from the game
 class character:
     def __init__(self,name,ID,ally,PV,atk,PM,position) -> None:
@@ -14,10 +12,11 @@ class character:
 
 #We create a board class to set a template for all our generated boards
 class board:
-    def _init_(self,board_ID,char_list,instruction_list) -> None:
+    def _init_(self,board_ID,char_list,instruction_list,score = 0) -> None:
         self.board_ID = board_ID                    #The unique ID of the board build on parents boards if any
         self.char_list = char_list                  #The list of all charcaters on board
         self.instruction_list = instruction_list    #The list of instructions required to reach the board
+        self.score = score
         pass
 
 
@@ -81,6 +80,25 @@ def melee_count(position,char_list,ID):
                 cpt +=1
     return cpt
 
+def launch_simulation(previous_boards = [],n = 1):
+    if(n>0):    
+        all_boards = move_simulation(previous_boards)
+        all_boards = spell_simulation(all_boards)
+        all_boards = foes_simulation(all_boards)
+        for i in all_boards:
+            i.score = fonction_score(i)
+        launch_simulation(all_boards,n-1)
+    else:
+        if(len(previous_boards)>0):
+            best_board = previous_boards[0]
+            for i in range (1,len(previous_boards)):
+                if(previous_boards[i].score > best_board.score):
+                    best_board = previous_boards[i]
+            return best_board.instruction_list
+        else:
+            print("error, no board generated")
+        
+
 mouvment = [[0 for j in range (7)] for i in range(7)]    
 
 TheoricalMovment(exemple2[0].position,exemple2,mouvment,"0")
@@ -97,25 +115,41 @@ for i in range (7):
 
 print(melee_count(exemple2[0].position,exemple2,"0"))
 
-<<<<<<< HEAD
-print(melee_count(exemple))
-
-
 def calcul(board,newboard) :
-    for i in range(board.len)
-    {
-        if (i = 1):
-        {
-            if(board[i].PV <= 0):
-            {
+    result = 0
+    for i in range(board.len):
+        if (i == 1):
+            if(newboard[i].PV <= 0):
                 result = result-10000
-            }
-        }
-        else
-        {
-
-        }
-    }
+            else:
+                result = result - (board[i].PV - newboard[i].PV)
+        else:
+            if(newboard[i].PV <= 0):
+                result = result + 2000 + newboard[i].atk
+            else:
+                result = result + 5*(board[i].PV - newboard[i].PV )
     return result
-=======
->>>>>>> 28efba16759175a73d6f17b425e15b239854e104
+
+
+def attack(board,perso):
+    mainpos = perso[0].position
+    for i in range(perso.len000):
+        if (i!=0):
+            TheoricalMovment(perso[i].position,board,mouvment,n=perso[i].PM)
+            if(mouvment[mainpos[0] + 1][mainpos[1]] == 1):
+                board[mainpos[0] + 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0]][mainpos[1]+1] == 1):
+                board[mainpos[0]][mainpos[1]+1] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
+                board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+            elif(mouvment[mainpos[0] - 1][mainpos[1]] == 1):
+                board[mainpos[0] - 1][mainpos[1]] = board[perso[i].position[0]][perso[i].position[1]]
+                board[perso[i].position[0]][perso[i].position[1]] = 0
+                perso[0].PV = perso[0].PV-perso[i].atk
+    
