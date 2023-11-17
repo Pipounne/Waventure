@@ -1,3 +1,4 @@
+from numpy import * as np 
 
 #We create a character class to gather all the data extracted from the game
 class character:
@@ -96,3 +97,25 @@ for i in range (7):
 
 print(melee_count(exemple2[0].position,exemple2,"0"))
 
+<<<<<<< HEAD
+print(melee_count(exemple))
+
+
+def calcul(board,newboard) :
+    for i in range(board.len)
+    {
+        if (i = 1):
+        {
+            if(board[i].PV <= 0):
+            {
+                result = result-10000
+            }
+        }
+        else
+        {
+
+        }
+    }
+    return result
+=======
+>>>>>>> 28efba16759175a73d6f17b425e15b239854e104
