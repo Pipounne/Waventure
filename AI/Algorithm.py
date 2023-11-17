@@ -13,9 +13,11 @@ class character:
 
 #We create a board class to set a template for all our generated boards
 class board:
+    def _init_(self,board_ID,char_list,instruction_list,score = 0) -> None:
         self.board_ID = board_ID                    #The unique ID of the board build on parents boards if any
         self.char_list = char_list                  #The list of all charcaters on board
         self.instruction_list = instruction_list    #The list of instructions required to reach the board
+        self.score = score
         pass
 
 
@@ -78,6 +80,25 @@ def melee_count(position,char_list,ID):
             if (abs(char_list[i].position[0]-position[0])<=1) and (abs(char_list[i].position[1]-position[1])<=1):
                 cpt +=1
     return cpt
+
+def launch_simulation(previous_boards = [],n = 1):
+    if(n>0):    
+        all_boards = move_simulation(previous_boards)
+        all_boards = spell_simulation(all_boards)
+        all_boards = foes_simulation(all_boards)
+        for i in all_boards:
+            i.score = fonction_score(i)
+        launch_simulation(all_boards,n-1)
+    else:
+        if(len(previous_boards)>0):
+            best_board = previous_boards[0]
+            for i in range (1,len(previous_boards)):
+                if(previous_boards[i].score > best_board.score):
+                    best_board = previous_boards[i]
+            return best_board.instruction_list
+        else:
+            print("error, no board generated")
+        
 
 mouvment = [[0 for j in range (7)] for i in range(7)]    
 
