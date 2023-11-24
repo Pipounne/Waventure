@@ -185,6 +185,7 @@ def foes_simulation1(board,k = 1):
             if (score2 > score1):
                 score1 = score2
                 temp = i
+            score2 = 0
         return result[temp]
         
     else:
