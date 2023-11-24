@@ -133,7 +133,7 @@ def score_calcul(board,newboard) :
                 result = result + 5*(board[i].PV - newboard[i].PV )
     return result
 
-def foes_simulation1(board,k = 1):
+def foes_simulation(board,k = 1):
     mainpos = board.char_list[0]
     n = board.char_list.len
     newboard = [0 for i in range (4)]
