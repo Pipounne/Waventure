@@ -133,7 +133,7 @@ def score_calcul(board,newboard) :
                 result = result + 5*(board[i].PV - newboard[i].PV )
     return result
 
-def foes_simulation1(board,k = 1):
+def foes_simulation(board,k = 1):
     mainpos = board.char_list[0]
     n = board.char_list.len
     newboard = [0 for i in range (4)]
@@ -145,19 +145,19 @@ def foes_simulation1(board,k = 1):
         if(mouvment[mainpos[0] + 1][mainpos[1]] == 1 and mainpos[0]<6):
             newboard[0] = board
             newboard[0].char_list[k].position = (mainpos[0] + 1,mainpos[1])
-            result[0] = foes_simulation1(newboard[0], k+1)
+            result[0] = foes_simulation(newboard[0], k+1)
         if(mouvment[mainpos[0]][mainpos[1]+1] == 1 and mainpos[1]<6):
             newboard[1] = board
             newboard[0].char_list[k].position = (mainpos[0],mainpos[1]+1)
-            result[1] = foes_simulation1(newboard[1], k+1)
+            result[1] = foes_simulation(newboard[1], k+1)
         if(mouvment[mainpos[0] - 1][mainpos[1]] == 1 and mainpos[0]>0):
             newboard[2] = board
             newboard[0].char_list[k].position = (mainpos[0] - 1,mainpos[1])
-            result[2] = foes_simulation1(newboard[2], k+1)
+            result[2] = foes_simulation(newboard[2], k+1)
         if(mouvment[mainpos[0]][mainpos[1]-1] == 1 and mainpos[1]>0):
             newboard[3] = board
             newboard[0].char_list[k].position = (mainpos[0],mainpos[1]-1)
-            result[3] = foes_simulation1(newboard[3], k+1)
+            result[3] = foes_simulation(newboard[3], k+1)
         for i in range(4):
             for j in range(1,n):
                 if (result[i].char_list[j].position in [(mainpos[0] - 1,mainpos[1]),(mainpos[0],mainpos[1]-1),(mainpos[0] + 1,mainpos[1]),(mainpos[0],mainpos[1]+1)]):
