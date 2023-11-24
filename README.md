@@ -17,7 +17,7 @@ It would also be interesting to teach our project to play with characters that h
 
 The game exclusively focus on his turn by turn combat system, giving player 20 classes and dozens of spell and gears to defeat all challenges available, alone or in team with one or two other players. It's this combat systme we will be trying to automate.
 
-The downside for our software is that trying to automate a game with so much customisation is gargantuan, so we only provide the software for a specific class and build :
+The downside for our software is that trying to automate a game with so much customisation is gargantuan, so we only provide the software for a specific class, the Brutal Fairblade, and build.
 
 For more informations concerning the comabt system and scope of the project, please look at the documentation file.
 
