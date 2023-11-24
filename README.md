@@ -31,6 +31,6 @@ To grade our outcomes and choose the best ones we compare the simulated boards w
 
 # How to run
 
-- Install Waven from Ankama official website
+- Install Waven from Ankama official website ( https://www.waven-game.com/en/download )
 - log in with the appropriate character (please contact us if you need the test account)
 - launch the software
