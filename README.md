@@ -1,3 +1,5 @@
+This project is only educational and is created in the context of a school project, we do not aim to actively use bot on Waven or sell any bot software to other players.
+
 # Waventure
 
 CARRE Arthur - Engineering college Leonard De Vinci - arthur@carreo.fr  
@@ -13,9 +15,9 @@ It would also be interesting to teach our project to play with characters that h
 
 # A quick look at Waven :
 
-"Waven" is a video game released on June 19, 2023. This game is free and developed by Ankama, continuing the storyline of the company's previous works such as the MMO Dofus ot he animated serie Wakfu.
+"Waven" is a video game released on June 19, 2023. This game is free and developed by Ankama, continuing the storyline of the company's previous works such as the MMO Dofus or the animated serie Wakfu.
 
-The game exclusively focus on his turn by turn combat system, giving player 20 classes and dozens of spell and gears to defeat all challenges available, alone or in team with one or two other players. It's this combat systme we will be trying to automate.
+The game exclusively focus on his turn by turn combat system, giving player 20 classes and dozens of spell and gears to defeat all challenges available, alone or in team with one or two other players. It's this combat systeme we will be trying to automate.
 
 The downside for our software is that trying to automate a game with so much customisation is gargantuan, so we only provide the software for a specific class, the Brutal Fairblade, and build.
 
@@ -25,7 +27,7 @@ For more informations concerning the comabt system and scope of the project, ple
 
 To find the optimal turn to make, the software will read all the needed informations by analysing screenshots taken from your screen in game. It will next simulate all possible outcome you can reach and choose the best one before applying the latter, controlling you mouse.
 
-To simulate all outcomes, we first observe all cells we can reach and choose the ones that allows melee attack. If no melee attack can be land, we choose all possible mouvement. Then, we test all combinations of spells we can cast this turn, try to naivly predict foes' mouvements.
+To simulate all outcomes, we first observe all cells we can reach and choose the ones that allows melee attack. If no melee attack can be land, we choose all possible mouvement. Then, we test all combinations of spells we can cast this turn, try to naivly predict foes' mouvements and grade our calculated outcomes.
 
 To grade our outcomes and choose the best ones we compare the simulated boards with the initial situation and see how many damages were dealt, receives, if ennemies were defeated or if you was defeated yourself. We obviously want to make a maximum of damages while taking the less and not being defeated.
 
@@ -33,4 +35,7 @@ To grade our outcomes and choose the best ones we compare the simulated boards w
 
 - Install Waven from Ankama official website ( https://www.waven-game.com/en/download )
 - log in with the appropriate character (please contact us if you need the test account)
-- launch the software
+- launch the software and Waven
+- Use the "refresh" button to assure the software recognize your game
+- Enter any fight on Waven and click on the software "start" button
+- Enjoy
