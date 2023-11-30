@@ -21,7 +21,3 @@ text = pytesseract.image_to_string(inverted_image)
 
 print(text[:-1])
 
-for i in range (len(inverted_array)):
-    if(inverted_array[i] != [ 42, 42, 42, 255].all):
-        print(inverted_array[i])
-

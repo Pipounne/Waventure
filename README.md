@@ -25,9 +25,24 @@ For more informations concerning the comabt system and scope of the project, ple
 
 # Methodology :
 
-To find the optimal turn to make, the software will read all the needed informations by analysing screenshots taken from your screen in game. It will next simulate all possible outcome you can reach and choose the best one before applying the latter, controlling you mouse.
+To find the optimal turn to make, the software will read all the needed informations by analysing screenshots taken from your screen in game. All the data extracted will go in specific objects to get the basic understanding of the overall challenge to solve.
 
-To simulate all outcomes, we first observe all cells we can reach and choose the ones that allows melee attack. If no melee attack can be land, we choose all possible mouvement. Then, we test all combinations of spells we can cast this turn, try to naivly predict foes' mouvements and grade our calculated outcomes.
+<details>
+<summary>See different Python Classes below</summary>
+<br>
+```
+Python
+class spell:
+    def __init__(self,ID,name,cost,dmg,extra_effect):
+        self.ID=ID
+        self.name=name
+        self.cost=cost
+        self.dmg=dmg
+        self.extra_effect=extra_effect
+```
+</details>
+
+Then we begin the simulation, we first observe all cells we can reach and choose the ones that allows melee attack. If no melee attack can be land, we choose all possible mouvement. Then, we test all combinations of spells we can cast this turn, try to naivly predict foes' mouvements and grade our calculated outcomes. 
 
 To grade our outcomes and choose the best ones we compare the simulated boards with the initial situation and see how many damages were dealt, receives, if ennemies were defeated or if you was defeated yourself. We obviously want to make a maximum of damages while taking the less and not being defeated.
 
