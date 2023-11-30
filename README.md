@@ -31,8 +31,7 @@ To find the optimal turn to make, the software will read all the needed informat
 <summary>See different Python Classes below</summary>
 <br>
 
-```
-Python
+```{ .py }
 class spell:
     def __init__(self,ID,name,cost,dmg,extra_effect):
         self.ID=ID
