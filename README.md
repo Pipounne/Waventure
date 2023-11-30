@@ -13,7 +13,7 @@ It would also be interesting to teach our project to play with characters that h
 
 # A quick look at Waven :
 
-"Waven" is a video game released on June 19, 2023. This game is free and developed by Ankama, continuing the storyline of the company's previous works such as the MMO Dofus ot he animated serie Wakfu.
+"Waven" is a video game released on June 19, 2023. This game is free and developed by Ankama, continuing the storyline of the company's previous works such as the MMO Dofus or the animated serie Wakfu.
 
 The game exclusively focus on his turn by turn combat system, giving player 20 classes and dozens of spell and gears to defeat all challenges available, alone or in team with one or two other players. It's this combat systme we will be trying to automate.
 
