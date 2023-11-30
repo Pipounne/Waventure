@@ -1,4 +1,4 @@
-This project is only educational and is created in the context of a school project, we do not aim to actively use bot on Waven or sell any bot software to other players.
+This work is only educational and is created in the context of a school project, we do not aim to actively use bot on Waven or sell any bot software to other players.
 
 # Waventure
 
