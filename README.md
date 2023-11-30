@@ -30,6 +30,7 @@ To find the optimal turn to make, the software will read all the needed informat
 <details>
 <summary>See different Python Classes below</summary>
 <br>
+
 ```
 Python
 class spell:
@@ -40,6 +41,7 @@ class spell:
         self.dmg=dmg
         self.extra_effect=extra_effect
 ```
+
 </details>
 
 Then we begin the simulation, we first observe all cells we can reach and choose the ones that allows melee attack. If no melee attack can be land, we choose all possible mouvement. Then, we test all combinations of spells we can cast this turn, try to naivly predict foes' mouvements and grade our calculated outcomes. 
