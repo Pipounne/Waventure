@@ -38,8 +38,8 @@ class spell:
 exemple = []
 
 exemple.append(character("Arti Ficelle","0",True,391,391,120,35,3,6,(4,4)))
-exemple.append(character("Tofu 1","1",False,120,120,0,30,3,0,(5,4)))
-exemple.append(character("Tofu 2","2",False,110,110,0,32,3,0,(4,5)))
+exemple.append(character("Tofu 1","1",False,220,220,0,30,3,0,(5,4)))
+exemple.append(character("Tofu 2","2",False,170,170,0,32,3,0,(4,5)))
 
 spells = []
 
@@ -88,17 +88,18 @@ def launch_simulation(previous_boards = [],n = 1):
     if(n>0):    
         all_boards = move_simulation(previous_boards[-1])
         all_boards = spell_simulation(all_boards)
-        all_boards = foes_simulation(all_boards)
+        for i in range(len(all_boards)):
+            all_boards[i] = foes_simulation(all_boards[i])
         for i in all_boards:
-            i.score = score_calcul(i)
+            i.score = score_calcul(previous_boards[0][0],i)
         previous_boards.append([all_boards])  
         launch_simulation(previous_boards,n-1)
     else:
-        if(len(previous_boards)>0):
-            best_board = previous_boards[0]
+        if(len(previous_boards[1])>0):
+            best_board = previous_boards[0][0]
             for i in range (1,len(previous_boards)):
-                if(previous_boards[i].score > best_board.score):
-                    best_board = previous_boards[i]
+                if(previous_boards[1][i][0].score > best_board.score):
+                    best_board = previous_boards[i][0][0]
             return best_board.instruction_list
         else:
             print("error, no board generated")
@@ -106,45 +107,46 @@ def launch_simulation(previous_boards = [],n = 1):
 #A function to grade boards
 def score_calcul(board,newboard) :
     result = 0
-    for i in range(board.len):
-        if (board[i].ID == 0):
-            if(newboard[i].PV <= 0):
+    for i in range(len(newboard.char_list)):
+        if (i == 0):
+            if(newboard.char_list[i].PV <= 0):
                 result = result-10000
             else:
-                result = result - (board[i].PV - newboard[i].PV)
+                result = result - (board.char_list[i].PV - newboard.char_list[i].PV)
         else:
-            if(newboard[i].PV <= 0):
-                result = result + 2000 + newboard[i].atk
+            if(newboard.char_list[i].PV <= 0):
+                result = result + 2000 + newboard.char_list[i].atk
             else:
-                result = result + 5*(board[i].PV - newboard[i].PV )
+                result = result + 5*(board.char_list[i].PV - newboard.char_list[i].PV )
     return result
 
 #A function trying to simulate foes mouvements during their turn
 def foes_simulation(board,k = 1):
-    mainpos = board.char_list[0]
-    n = board.char_list.len
-    newboard = [0 for i in range (4)]
-    result = [0 for i in range (4)]
+    mainpos = board.char_list[0].position
+    n = len(board.char_list)
+    newboard = board
+    result = [board,board,board,board]
     score1 = 0
     score2 = 0
+    mouvment = [[0 for i in range (7)] for j in range (7)]
     if (k<n):
-        TheoricalMovment(board.char_list[0].position,board.char_list, mouvment,board.ID)
-        if(mouvment[mainpos[0] + 1][mainpos[1]] == 1 and mainpos[0]<6):
-            newboard[0] = board
-            newboard[0].char_list[k].position = (mainpos[0] + 1,mainpos[1])
-            result[0] = foes_simulation(newboard[0], k+1)
-        if(mouvment[mainpos[0]][mainpos[1]+1] == 1 and mainpos[1]<6):
-            newboard[1] = board
-            newboard[0].char_list[k].position = (mainpos[0],mainpos[1]+1)
-            result[1] = foes_simulation(newboard[1], k+1)
+        TheoricalMovment(board.char_list[0].position,board.char_list, mouvment,board.board_ID)
+        if(mouvment[mainpos[0] + 1][mainpos[1]] == 1 and mainpos[0]<5):
+            newboard = board
+            newboard.char_list[k].position = (mainpos[0] + 1,mainpos[1])
+            result[0] = foes_simulation(newboard, k+1)
+        if(mouvment[mainpos[0]][mainpos[1]+1] == 1 and mainpos[1]<5):
+            newboard = board
+            newboard.char_list[k].position = (mainpos[0],mainpos[1]+1)
+            result[1] = foes_simulation(newboard, k+1)
         if(mouvment[mainpos[0] - 1][mainpos[1]] == 1 and mainpos[0]>0):
-            newboard[2] = board
-            newboard[0].char_list[k].position = (mainpos[0] - 1,mainpos[1])
-            result[2] = foes_simulation(newboard[2], k+1)
+            newboard = board
+            newboard.char_list[k].position = (mainpos[0] - 1,mainpos[1])
+            result[2] = foes_simulation(newboard, k+1)
         if(mouvment[mainpos[0]][mainpos[1]-1] == 1 and mainpos[1]>0):
-            newboard[3] = board
-            newboard[0].char_list[k].position = (mainpos[0],mainpos[1]-1)
-            result[3] = foes_simulation(newboard[3], k+1)
+            newboard = board
+            newboard.char_list[k].position = (mainpos[0],mainpos[1]-1)
+            result[3] = foes_simulation(newboard, k+1)
         for i in range(4):
             for j in range(1,n):
                 if (result[i].char_list[j].position in [(mainpos[0] - 1,mainpos[1]),(mainpos[0],mainpos[1]-1),(mainpos[0] + 1,mainpos[1]),(mainpos[0],mainpos[1]+1)]):
@@ -286,4 +288,4 @@ def spell_simulation(current_boards):
 
 
 
-launch_simulation([[test_board]],1)
+print(launch_simulation([[test_board]],1))
