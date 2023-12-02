@@ -1,23 +1,21 @@
 from PIL import Image
-from PIL import ImageOps
+from PIL import ImageGrab
 from pytesseract import *
 import cv2  
 import numpy as np
 
-inverted_image = Image.open(r"C:\Users\antho\Pictures\test.png")
+snapshot = ImageGrab.grab(bbox=(0,0,1343,881))
 path_to_tesseract = r"C:\Users\antho\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
 pytesseract.tesseract_cmd = path_to_tesseract
 
-inverted_array = np.array(inverted_image)
+im_rgb = snapshot.convert('RGB')
 
-inverted_image = cv2.resize(inverted_array,None,fx = 3 , fy = 3 , interpolation=cv2.INTER_CUBIC)
+print(im_rgb)
 
-inverted_image = Image.fromarray(inverted_image)
+snapshot.show()
 
-inverted_image.show()
+#text = pytesseract.image_to_string(inverted_image)
 
-text = pytesseract.image_to_string(inverted_image)
-
-print(text[:-1])
+#print(text[:-1])
 

@@ -13,7 +13,7 @@ class character:
         self.PA = PA
         self.PM = PM                #The movement point of the character
         self.position = position    #The position of the character on the board as a tuple (x,y)
-        pass
+
 
 #We create a board class to set a template for all our generated boards
 class board:
@@ -25,8 +25,8 @@ class board:
         self.instruction_list = instruction_list[:]     #The list of instructions required to reach the board
         self.score = score                              #The score of the board, calculated later
         self.spell_list = spell_list[:]                 #The spells available to the player, maximum of 7
-        pass
 
+#We create a spell class to store all informations about spells
 class spell:
     def __init__(self,ID,name,cost,dmg,extra_effect):
         self.ID=ID
