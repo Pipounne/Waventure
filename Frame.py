@@ -1,3 +1,11 @@
+import time
+from tkinter import *
+from tkinter import ttk
+from pywinauto import *
+import win32gui
+from PIL import ImageGrab
+
+
 def Frame():
     hwnd = win32gui.FindWindow(None, "Waven")
     win32gui.MoveWindow(hwnd, -8, 0, 1366,900, True)
@@ -16,3 +24,4 @@ def Frame():
 
     root.mainloop()
 
+Frame()
