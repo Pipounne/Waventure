@@ -45,9 +45,20 @@ spells = []
 
 spells.append(spell("0","Fulgur",3,14,("single_dmg_melee",4)))
 spells.append(spell("1","Touche Enflammée",3,9,("square_dmg_heor_melee",5)))
-spells.append(spell("2","Nouvelle vague",6,36,("None")))
-spells.append(spell("3","Onde de choc",8,38,("cost_reduce_melee",8)))
-spells.append(spell("4","Armure brutale",3,0,("dmg_equal_armor")))
+spells.append(spell("2","Nouvelle Vague",6,36,("None")))
+spells.append(spell("3","Onde de Choc",8,38,("cost_reduce_melee",8)))
+spells.append(spell("4","Armure Brutale",3,0,("dmg_equal_armor")))
+spells.append(spell("5","Heurt de Gloire",3,8,("armor_add_melee",3)))
+spells.append(spell("6","Touche Aqueuse",4,18,("heal_melee",6)))
+spells.append(spell("7","Dag",4,17,("None")))
+spells.append(spell("8","Touche Terrestre",5,26,("armor_add_melee",8)))
+spells.append(spell("9","Butoir",5,30,("None")))
+spells.append(spell("10","Foudroyer",5,29,("None")))
+spells.append(spell("11","Touche Venteuse",6,27,("single_dmg_melee",7)))
+spells.append(spell("12","Sentence",6,0,("dmg_equal_atk")))
+spells.append(spell("13","Accumulation",6,0,("dmg_equal_atk_stack_melee",0)))
+spells.append(spell("14","Demonstration Brutale",7,0,("dmg_equal_atk_cost_reduce_melee",7)))
+
 
 test_board = board("0",exemple,[[]],spells,0)
 
@@ -250,6 +261,9 @@ def precast(board):
             print(board.spell_list[i].cost)
         elif(board.spell_list[i].extra_effect=="dmg_equal_armor"):
             board.spell_list[i].dmg = board.char_list[0].armor
+        elif(board.spell_list[i].extra_effect=="dmg_equal_atk"):
+            board.spell_list[i].dmg = board.char_list[0].atk
+            
 
 def cast_spell(board,target_ID,spell):
     board.char_list[0].PA -= spell.cost
