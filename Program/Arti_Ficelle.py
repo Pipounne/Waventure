@@ -1,4 +1,5 @@
 from numpy import *
+#import Read_Data
 
 #We create a character class to gather all the data extracted from the game
 class character:
@@ -13,7 +14,7 @@ class character:
         self.PA = PA
         self.PM = PM                #The movement point of the character
         self.position = position    #The position of the character on the board as a tuple (x,y)
-        pass
+
 
 #We create a board class to set a template for all our generated boards
 class board:
@@ -25,8 +26,8 @@ class board:
         self.instruction_list = instruction_list[:]     #The list of instructions required to reach the board
         self.score = score                              #The score of the board, calculated later
         self.spell_list = spell_list[:]                 #The spells available to the player, maximum of 7
-        pass
 
+#We create a spell class to store all informations about spells
 class spell:
     def __init__(self,ID,name,cost,dmg,extra_effect):
         self.ID=ID
@@ -41,27 +42,48 @@ exemple.append(character("Arti Ficelle","0",True,391,391,120,35,3,6,(4,4)))
 exemple.append(character("Tofu 1","1",False,220,220,0,30,3,0,(5,4)))
 exemple.append(character("Tofu 2","2",False,170,170,0,32,3,0,(4,5)))
 
-spells = []
+spells = {}
 
-spells.append(spell("0","Fulgur",3,14,("single_dmg_melee",4)))
-spells.append(spell("1","Touche Enflammée",3,9,("square_dmg_heor_melee",5)))
-spells.append(spell("2","Nouvelle vague",6,36,("None")))
-spells.append(spell("3","Onde de choc",8,38,("cost_reduce_melee",8)))
-spells.append(spell("4","Armure brutale",3,0,("dmg_equal_armor")))
+spells["Fulgur"]=[(spell("0","Fulgur",3,14,("single_dmg_melee",4))),[(185,62,10)]]
+spells["Touche Enflammée"]=[(spell("1","Touche Enflammée",3,9,("square_dmg_heor_melee",5))),[(255,158,34),(255,194,50),(254, 103, 13)]]
+spells["Nouvelle Vague"]=[(spell("2","Nouvelle Vague",6,36,("None"))),[(0,236,155),(0,236,255)]]
+spells["Onde de Choc"]=[(spell("3","Onde de Choc",8,38,("cost_reduce_melee",8))),[(12, 135, 187),(34, 46, 51)]]
+spells["Armure Brutale"]=[(spell("4","Armure Brutale",3,0,("dmg_equal_armor"))),[(243, 243, 245)]]
+spells["Heurt de Gloire"]=[(spell("5","Heurt de Gloire",3,8,("armor_add_melee",3))),[(264, 264, 251),(250, 253, 174),(248, 253, 145)]]
+spells["Touche Aqueuse"]=[(spell("6","Touche Aqueuse",4,18,("heal_melee",6))),[(3, 105, 145)]]
+spells["Dag"]=[(spell("7","Dag",4,17,("None"))),[(121, 246, 253),(64, 241, 252)]]
+spells["Touche Terrestre"]=[(spell("8","Touche Terrestre",5,26,("armor_add_melee",8))),[(95, 148, 8)]]
+spells["Butoir"]=[(spell("9","Butoir",5,30,("None"))),[(69, 104, 7)]]
+spells["Foudroyer"]=[(spell("10","Foudroyer",5,29,("None"))),[(75,2,227)]]
+spells["Touche Venteuse"]=[(spell("11","Touche Venteuse",6,27,("single_dmg_melee",7))),[(196,115,255),(184, 87, 255)]]
+spells["Sentence"]=[(spell("12","Sentence",6,0,("dmg_equal_atk"))),[(220, 130, 84),(240, 199, 141),(227, 154, 95),(233, 175, 114)]]
+spells["Accumulation"]=[(spell("13","Accumulation",6,0,("dmg_equal_atk_stack_melee",0))),[(239, 210, 108)]]
+spells["Demonstration Brutale"]=[(spell("14","Demonstration Brutale",7,0,("dmg_equal_atk_cost_reduce_melee",7))),[(242, 224, 116),(89, 87, 78)]]
 
-test_board = board("0",exemple,[[]],spells,0)
+spellist = []
+
+test_board = board("0",exemple,[[]],spellist,0)
+
+#For debug purpose
+def print_board(board):
+    tab = [['/' for i in range (7)] for j in range (7)]
+    for i in range(len(board)):
+        if(board[i].ally):
+            tab[board[i].position[0]][board[i].position[1]]="\033[92m" + board[i].ID + "\033[0m"
+        else:
+            tab[board[i].position[0]][board[i].position[1]]="\033[91m" + board[i].ID + "\033[0m"
+    return tab
 
 #This function test if a chosen cell is free to move on
 def IsCellFree(wanted_cell,char_list,ID):
     available = True
     for i in range (len(char_list)):
-        if(ID != char_list[i].ID):          #We don't want to mark our own cell as not free
+        if(ID != char_list[i].ID):
             if(wanted_cell == char_list[i].position):
                 available = False
     return available
 
 #A function to calcul all available deplacements
-#While we still have mouvment points we try all adjacents cells
 def TheoricalMovment(starting_pos,char_list,mouvment,ID,n = 4):
     if (n != 0) :
         if(-1<starting_pos[0]<7 and -1<starting_pos[1]<7):
@@ -83,8 +105,7 @@ def melee_count(position,char_list,ID):
                 cpt +=1
     return cpt
 
-#A function to order all the turns simulations
-def launch_simulation(previous_boards = [],n = 1):
+def launch_simulation(previous_boards,return_tab,n = 1):
     if(n>0):    
         all_boards = move_simulation(previous_boards[-1])
         all_boards = spell_simulation(all_boards)
@@ -92,19 +113,19 @@ def launch_simulation(previous_boards = [],n = 1):
             all_boards[i] = foes_simulation(all_boards[i])
         for i in all_boards:
             i.score = score_calcul(previous_boards[0][0],i)
-        previous_boards.append([all_boards])  
-        launch_simulation(previous_boards,n-1)
+        previous_boards.append(all_boards)  
+        launch_simulation(previous_boards,return_tab,n-1)
     else:
         if(len(previous_boards[1])>0):
             best_board = previous_boards[0][0]
             for i in range (1,len(previous_boards)):
-                if(previous_boards[1][i][0].score > best_board.score):
-                    best_board = previous_boards[i][0][0]
-            return best_board.instruction_list
-        else:
-            print("error, no board generated")
+                if(previous_boards[1][i].score > best_board.score):
+                    best_board = previous_boards[i][0]
+            for x in range (len(best_board.instruction_list)):
+                return_tab.append([])
+                for y in range (len(best_board.instruction_list[x])):
+                    return_tab[x].append(best_board.instruction_list[x][y])
 
-#A function to grade boards
 def score_calcul(board,newboard) :
     result = 0
     for i in range(len(newboard.char_list)):
@@ -120,7 +141,6 @@ def score_calcul(board,newboard) :
                 result = result + 5*(board.char_list[i].PV - newboard.char_list[i].PV )
     return result
 
-#A function trying to simulate foes mouvements during their turn
 def foes_simulation(board,k = 1):
     mainpos = board.char_list[0].position
     n = len(board.char_list)
@@ -159,8 +179,7 @@ def foes_simulation(board,k = 1):
         
     else:
         return board
-
-#Apply the damages to a specific character, first on its armor and then on its health points
+      
 def damage(char_list, damages, defender_ID):
     char_list[int(defender_ID)].armor = char_list[int(defender_ID)].armor - damages
     if(char_list[int(defender_ID)].armor <= 0):
@@ -170,13 +189,12 @@ def damage(char_list, damages, defender_ID):
     if(char_list[int(defender_ID)].PV <= 0 ):
         char_list.pop(int(defender_ID))
 
-#Heal some health points of a specific character
 def heal(char, value):
     char.PV += value
     if(char.PV>char.max_health):
         char.PV = char.max_health
 
-#Handle all the movments availble for our player
+
 def move_simulation(previous_boards):
     for i in range (len(previous_boards)):
         cpt = 1
@@ -185,7 +203,6 @@ def move_simulation(previous_boards):
         TheoricalMovment(previous_boards[i].char_list[0].position,previous_boards[i].char_list,mouvment,"0")
         for x in range (7):
             for y in range (7):
-                #If we can attack, we do so
                 if(mouvment[x][y]==2):
                     if(mouvment[x-1][y] == 1):
                         return_boards.append(board(previous_boards[i].board_ID+"/"+str(cpt),previous_boards[i].char_list,previous_boards[i].instruction_list,previous_boards[i].spell_list))
@@ -221,7 +238,6 @@ def move_simulation(previous_boards):
                             if(return_boards[-1].char_list[j].position == (x,y)):
                                 damage(return_boards[-1].char_list,return_boards[-1].char_list[0].atk+(0.6*return_boards[-1].char_list[0].armor),return_boards[-1].char_list[j].ID)
 
-        #Else, we have all others movments left with
         if(len(return_boards) == 0):
             for x in range (7):
                 for y in range (7):
@@ -233,7 +249,6 @@ def move_simulation(previous_boards):
                         
         return return_boards
     
-#Apply all modifications happenning before spell casting
 def precast(board):
     for i in range(len(board.spell_list)):
         if(board.spell_list[i].extra_effect=="cost_reduce_melee"):
@@ -241,8 +256,10 @@ def precast(board):
             print(board.spell_list[i].cost)
         elif(board.spell_list[i].extra_effect=="dmg_equal_armor"):
             board.spell_list[i].dmg = board.char_list[0].armor
+        elif(board.spell_list[i].extra_effect=="dmg_equal_atk"):
+            board.spell_list[i].dmg = board.char_list[0].atk
+            
 
-#Cast spell properly according to their properties
 def cast_spell(board,target_ID,spell):
     board.char_list[0].PA -= spell.cost
     if (melee_count(board.char_list[0].position,board.char_list,0)>0) and (spell.extra_effect[0][-5:]=="melee"):
@@ -263,7 +280,6 @@ def cast_spell(board,target_ID,spell):
     
     board.char_list[0].PA -= spell.cost
 
-#Handle all the spell combinations availbe to the player
 def spell_simulation(current_boards):
     cpt = 1
     return_boards = []
@@ -287,5 +303,6 @@ def spell_simulation(current_boards):
                 
 
 
-
-print(launch_simulation([[test_board]],1))
+#final_instructions = []
+#launch_simulation([[test_board]],final_instructions,1)
+#print(final_instructions)

@@ -4,7 +4,8 @@ from tkinter import ttk
 from pywinauto import *
 import win32gui
 from PIL import ImageGrab
-
+import Arti_Ficelle
+import Read_Data
 
 def Frame():
     hwnd = win32gui.FindWindow(None, "Waven")
