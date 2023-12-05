@@ -36,11 +36,7 @@ class spell:
         self.dmg=dmg
         self.extra_effect=extra_effect
 
-exemple = []
-
-exemple.append(character("Arti Ficelle","0",True,391,391,120,35,3,6,(4,4)))
-exemple.append(character("Tofu 1","1",False,220,220,0,30,3,0,(5,4)))
-exemple.append(character("Tofu 2","2",False,170,170,0,32,3,0,(4,5)))
+char_list = []
 
 spells = {}
 
@@ -62,7 +58,7 @@ spells["Demonstration Brutale"]=[(spell("14","Demonstration Brutale",7,0,("dmg_e
 
 spellist = []
 
-test_board = board("0",exemple,[[]],spellist,0)
+test_board = board("0",char_list,[[]],spellist,0)
 
 #For debug purpose
 def print_board(board):

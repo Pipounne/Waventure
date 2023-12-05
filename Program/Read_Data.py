@@ -7,6 +7,8 @@ import time
 from Arti_Ficelle import *
 
 basic_cells = [(155,155,50),(165,124,72),(154,143,62),(175,125,78),(182,149,113)]
+signs = [(89, 146, 34),(212, 85, 0),(52, 21, 0),(191, 142, 0),(253, 66, 66)]
+background = [(51,51,51)]
 
 path_to_tesseract = r"C:\Users\antho\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
@@ -18,7 +20,51 @@ def notsamepixel(test_pixel,reference_pixels):
             return False
     return True
 
-def reco_board():
+def clean(image,x): 
+    for i in range(-3,12):
+        for j in range(image.height):
+            if( i in [5,6] and j in [image.height-4,image.height-5]):
+                image.putpixel((x+i,j),(255,255,255))
+            else:
+                image.putpixel((x+i,j),(42,42,42))
+
+#for i in range (inverted_image.width):
+    #print(str(i) + "  "+ str(inverted_image.getpixel((i,9))))
+
+def add_character(char_list,ally):
+    fond = Image.open(r"fond.png")
+    x = 0
+    if(ally):
+        pass
+    else:
+        image = ImageGrab.grab(bbox=(950,68,1230,86)) 
+
+        while(notsamepixel(image.getpixel((x,0))[0:3],background) and (x < image.width)):
+            for j in range (image.height):
+                image.putpixel((x,j),(42,42,42))
+            x+=1
+
+        for i in range(x,image.width):
+                if(not notsamepixel(image.getpixel((i,9))[0:3],signs)):
+                    clean(image,i)
+
+        x=1
+        while(notsamepixel(image.getpixel((-x,0))[0:3],background) and (x < image.width)):
+            for j in range (image.height):
+                image.putpixel((-x,j),(42,42,42))
+            x+=1
+
+        for i in range(image.width):
+            for j in range(image.height):
+                fond.putpixel((50+i,60+j),image.getpixel((i,j)))
+        
+        image = fond.resize((fond.width*4,fond.height*4),resample=Image.BOX)
+        image.show()
+        time.sleep(1)
+        text = pytesseract.image_to_string(image)
+        print(text[:-1])
+
+def reco_board(chars,hand):
     image = ImageGrab.grab(bbox=(0,0,1343,882))
     for i in range (7):
           for j in range (7):
@@ -31,8 +77,7 @@ def reco_board():
                 badpixel=snapshot.getpixel((1210,66))
                 if(badpixel[0]==255 and badpixel[1]==255 and badpixel[2] == 255):
                     print("mezzant")
-                    data = ImageGrab.grab(bbox=(1050,68,1230,86))
-                    data.show()
+                    add_character(chars,False)
                 elif(goodpixel[0]==255 and goodpixel[1]==255 and goodpixel[2] == 255):
                     print("zentil")
                 pywinauto.mouse.release(button="left",coords=(375+i*50+j*50,475+i*25-j*25))
@@ -44,7 +89,7 @@ def reco_board():
             for j in range (len(valeur[1])):
                 if (not notsamepixel(image.getpixel((500+(i*63),820)),valeur[1])):
                     print(cle)
-                    spellist.append(spells[cle])
+                    hand.append(spells[cle])
                     break
 
         print(i)
@@ -56,9 +101,10 @@ def reco_board():
 
     image.show()
 
-reco_board()
+reco_board(char_list,spellist)
 
-#text = pytesseract.image_to_string(inverted_image)
-
+#image = Image.open(r"fond.png")
+#image = image.resize((image.width*4,image.height*4),resample=Image.BOX)
+#image.show()
+#text = pytesseract.image_to_string(image)
 #print(text[:-1])
-
