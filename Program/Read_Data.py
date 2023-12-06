@@ -1,5 +1,6 @@
 from PIL import Image
 from PIL import ImageGrab
+from PIL import ImageOps
 from pytesseract import * 
 import numpy as np
 import pywinauto
@@ -7,8 +8,16 @@ import time
 from Arti_Ficelle import *
 
 basic_cells = [(155,155,50),(165,124,72),(154,143,62),(175,125,78),(182,149,113)]
-signs = [(89, 146, 34),(212, 85, 0),(52, 21, 0),(191, 142, 0),(253, 66, 66)]
+signs = [(89, 146, 34),(212, 85, 0),(52, 21, 0),(191, 142, 0),(253, 66, 66),(255, 248, 1),(139, 227, 53),(225, 90, 0),(78, 128, 30),(159, 117, 0)]
 background = [(51,51,51)]
+
+mouse_coordinates = {}
+for i in range (7):
+    for j in range (7):
+        mouse_coordinates[str(i)+"."+str(j)] = (375+i*50+j*50,475+i*25-j*25)
+
+for i in range (7):
+    mouse_coordinates["spells."+str(i)] = (500+(i*63),820)
 
 path_to_tesseract = r"C:\Users\antho\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
@@ -45,6 +54,7 @@ def add_character(char_list,ally):
             x+=1
 
         for i in range(x,image.width):
+                print(image.getpixel((i,9)))
                 if(not notsamepixel(image.getpixel((i,9))[0:3],signs)):
                     clean(image,i)
 
@@ -56,9 +66,9 @@ def add_character(char_list,ally):
 
         for i in range(image.width):
             for j in range(image.height):
-                fond.putpixel((50+i,60+j),image.getpixel((i,j)))
+                fond.putpixel((50+i,90+j),image.getpixel((i,j)))
         
-        image = fond.resize((fond.width*4,fond.height*4),resample=Image.BOX)
+        #image = fond.resize((fond.width*4,fond.height*4),resample=Image.BOX)
         image.show()
         time.sleep(1)
         text = pytesseract.image_to_string(image)
@@ -68,9 +78,9 @@ def reco_board(chars,hand):
     image = ImageGrab.grab(bbox=(0,0,1343,882))
     for i in range (7):
           for j in range (7):
-            if(notsamepixel(image.getpixel((375+i*50+j*50,475+i*25-j*25)),basic_cells)):
-                pywinauto.mouse.click(button="left",coords=(375+i*50+j*50,475+i*25-j*25))
-                pywinauto.mouse.press(button="left",coords=(375+i*50+j*50,475+i*25-j*25))
+            if(notsamepixel(image.getpixel(mouse_coordinates[str(i)+"."+str(j)]),basic_cells)):
+                pywinauto.mouse.click(button="left",coords=mouse_coordinates[str(i)+"."+str(j)])
+                pywinauto.mouse.press(button="left",coords=mouse_coordinates[str(i)+"."+str(j)])
                 time.sleep(0.7)
                 snapshot = ImageGrab.grab(bbox=(0,0,1343,80))
                 goodpixel=snapshot.getpixel((120,66))
@@ -80,20 +90,18 @@ def reco_board(chars,hand):
                     add_character(chars,False)
                 elif(goodpixel[0]==255 and goodpixel[1]==255 and goodpixel[2] == 255):
                     print("zentil")
-                pywinauto.mouse.release(button="left",coords=(375+i*50+j*50,475+i*25-j*25))
-                    
-            image.putpixel((375+i*50+j*50,475+i*25-j*25),(0,255,0))
+                pywinauto.mouse.release(button="left",coords=mouse_coordinates[str(i)+"."+str(j)])
 
     for i in range (0):
         for cle,valeur in spells.items() :
             for j in range (len(valeur[1])):
-                if (not notsamepixel(image.getpixel((500+(i*63),820)),valeur[1])):
+                if (not notsamepixel(image.getpixel(mouse_coordinates["spells."+str(i)]),valeur[1])):
                     print(cle)
                     hand.append(spells[cle])
                     break
 
         print(i)
-        print(image.getpixel((500+(i*63),820)))
+        print(image.getpixel(mouse_coordinates["spells."+str(i)]))
 
     image.putpixel((941,820),(255,0,0))
     image.putpixel((1210,66),(0,255,0))
