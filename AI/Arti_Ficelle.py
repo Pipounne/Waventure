@@ -292,7 +292,24 @@ def spell_simulation(current_boards):
                                 return_boards[-1].spell_list.pop(l)
     return return_boards
                 
-
+def move_mouse(instruction,coord,pos):
+    pos = coord[str(pos[0])+"."+str(pos[1])]
+    for i in range(len(instruction)):
+        if(instruction[i][0] == 1) :
+            pyautogui.moveTo(pos, duration = 1)
+            instruction[i][1] = coord[str(instruction[i][1][0]) + "." + str(instruction[i][1][1])] 
+            pyautogui.dragTo(instruction[i][1],duration = 1)
+        elif(instruction[i][0] == 2) :
+            pyautogui.moveTo(pos, duration = 1)
+            instruction[i][1] = coord[str(instruction[i][1][0]) + "." + str(instruction[i][1][1])]
+            pyautogui.dragTo(instruction[i][1],duration = 1)
+            instruction[i][2] = coord[str(instruction[i][2][0]) + "." + str(instruction[i][2][1])]
+            pyautogui.dragTo(instruction[i][2],duration = 1)         
+        elif(instruction[i][0] == 3) :
+            instruction[i][1] = coord["spell" + str(instruction[i][1])]
+            pyautogui.moveTo(instruction[i][1], duration = 1)
+            instruction[i][2] = coord[str(instruction[i][2][0]) + "." + str(instruction[i][2][1])]
+            pyautogui.dragTo(instruction[i][2],duration = 1)  
 
 final_instructions = []
 launch_simulation([[test_board]],final_instructions,1)
