@@ -76,9 +76,8 @@ def start_waventure():
         time.sleep(12)
         combat_launched = True
         while(combat_launched):
-            #(33, 182, 255)
             image = ImageGrab.grab(bbox = (844,800,1000,900))
-            if(not notsamepixel(image.getpixel((100,50)),[(0, 0, 0)])):               
+            if(not notsamepixel(image.getpixel((100,50)),[(33, 182, 255)])):               
                 char_list = [1]
                 spellist = []
                 our_instructions = []
@@ -89,17 +88,17 @@ def start_waventure():
                 print(our_instructions)
                 apply_instructions(our_instructions)
             image = ImageGrab.grab(bbox=(0,0,1343,882))
-            #if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
-            combat_launched = False
-            time.sleep(10)
-            pywinauto.mouse.click(button="left", coords=(700,775))
-            time.sleep(7)
-            pywinauto.mouse.move(coords=(762,470))
-            pywinauto.mouse.press(button="left", coords=(762,470))
-            time.sleep(0.2)
-            pywinauto.mouse.release(button="left", coords=(762,470))
-            time.sleep(0.2)
-            pywinauto.mouse.click(button="left", coords=(790,410))
+            if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
+                time.sleep(10)
+                pywinauto.mouse.click(button="left", coords=(700,775))
+                time.sleep(7)
+                pywinauto.mouse.move(coords=(762,470))
+                pywinauto.mouse.press(button="left", coords=(762,470))
+                time.sleep(0.2)
+                pywinauto.mouse.release(button="left", coords=(762,470))
+                time.sleep(0.2)
+                pywinauto.mouse.click(button="left", coords=(790,410))
+                combat_launched = False
                 
 
 Frame()
