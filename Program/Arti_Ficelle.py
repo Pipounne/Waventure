@@ -84,7 +84,7 @@ def IsCellFree(wanted_cell,char_list,ID):
     return available
 
 #A function to calcul all available deplacements
-def TheoricalMovment(starting_pos,char_list,mouvment,ID,n = 4):
+def TheoricalMovment(starting_pos,char_list,mouvment,ID,n = 5):
     if (n != 0) :
         if(-1<starting_pos[0]<7 and -1<starting_pos[1]<7):
             if(IsCellFree(starting_pos,char_list,ID)):
@@ -210,39 +210,48 @@ def move_simulation(previous_boards):
         for x in range (7):
             for y in range (7):
                 if(mouvment[x][y]==2):
-                    if(mouvment[x-1][y] == 1):
+                    if((x-1>=0) and mouvment[x-1][y] == 1):
                         return_boards.append(board(previous_boards[i].board_ID+"/"+str(cpt),previous_boards[i].char_list,previous_boards[i].instruction_list,previous_boards[i].spell_list,previous_boards[i].deck))
                         return_boards[-1].instruction_list += [[2,previous_boards[i].char_list[0].position,(x-1,y),(x,y)]]
                         return_boards[-1].char_list[0].position = (x-1,y)
                         cpt+=1
-                        for j in range (len(return_boards[-1].char_list)):
+                        j = 0
+                        while j < len(return_boards[-1].char_list):
                             if(return_boards[-1].char_list[j].position == (x,y)):
                                 damage(return_boards[-1].char_list,return_boards[-1].char_list[0].atk+(0.6*return_boards[-1].char_list[0].armor),return_boards[-1].char_list[j].ID)
-                        
-                    if(mouvment[x+1][y] == 1):
+                            j+=1    
+                    
+                    
+                    if((x+1<7) and (mouvment[x+1][y] == 1)):
                         return_boards.append(board(previous_boards[i].board_ID+"/"+str(cpt),previous_boards[i].char_list,previous_boards[i].instruction_list,previous_boards[i].spell_list,previous_boards[i].deck))
                         return_boards[-1].instruction_list += [[2,previous_boards[i].char_list[0].position,(x+1,y),(x,y)]]
                         return_boards[-1].char_list[0].position = (x+1,y)
                         cpt+=1
-                        for j in range (len(return_boards[-1].char_list)):
-                            if(return_boards[-1].char_list[j].position == (x,y)):
+                        j = 0 
+                        while j < len(return_boards[-1].char_list):
+                            if(return_boards[-1].char_list[j].position == (x,y) ):
                                 damage(return_boards[-1].char_list,return_boards[-1].char_list[0].atk+(0.6*return_boards[-1].char_list[0].armor),return_boards[-1].char_list[j].ID)
-                    if(mouvment[x][y-1] == 1):
+                            j+=1
+                    if((y-1>=0)  and (mouvment[x][y-1] == 1)):
                         return_boards.append(board(previous_boards[i].board_ID+"/"+str(cpt),previous_boards[i].char_list,previous_boards[i].instruction_list,previous_boards[i].spell_list,previous_boards[i].deck))
                         return_boards[-1].instruction_list += [[2,previous_boards[i].char_list[0].position,(x,y-1),(x,y)]]
                         return_boards[-1].char_list[0].position = (x,y-1)
                         cpt+=1
-                        for j in range (len(return_boards[-1].char_list)):
+                        j = 0
+                        while j < len(return_boards[-1].char_list):
                             if(return_boards[-1].char_list[j].position == (x,y)):
                                 damage(return_boards[-1].char_list,return_boards[-1].char_list[0].atk+(0.6*return_boards[-1].char_list[0].armor),return_boards[-1].char_list[j].ID)
-                    if(mouvment[x][y+1] == 1):
+                            j+=1
+                    if((y+1<7) and (mouvment[x][y+1] == 1)):
                         return_boards.append(board(previous_boards[i].board_ID+"/"+str(cpt),previous_boards[i].char_list,previous_boards[i].instruction_list,previous_boards[i].spell_list,previous_boards[i].deck))
                         return_boards[-1].instruction_list += [[2,previous_boards[i].char_list[0].position,(x,y+1),(x,y)]]
                         return_boards[-1].char_list[0].position = (x,y+1)
                         cpt+=1
-                        for j in range (len(return_boards[-1].char_list)):
+                        j = 0
+                        while j < len(return_boards[-1].char_list):
                             if(return_boards[-1].char_list[j].position == (x,y)):
                                 damage(return_boards[-1].char_list,return_boards[-1].char_list[0].atk+(0.6*return_boards[-1].char_list[0].armor),return_boards[-1].char_list[j].ID)
+                            j+=1
 
         if(len(return_boards) == 0):
             for x in range (7):
@@ -284,9 +293,11 @@ def cast_spell(board,target_ID,spell):
             damage(board.char_list,spell.extra_effect[1]+spell.dmg,target_ID)
         else:
             if(spell.extra_effect[0] == "square_dmg_hero_melee"):
-                for i in range (1, len(board.char_list)):
+                i=1
+                while i < len(board.char_list):
                     if(abs(board.char_list[i].position[0]-board.char_list[0].position[0])<=1) and (abs(board.char_list[i].position[1]-board.char_list[0].position[1])<=1):
                         damage(board.char_list,spell.extra_effect[1],i)
+                    i+=1
             elif(spell.extra_effect[0] == "heal_melee"):
                 heal(board.char_list[0],spell.extra_effect[1])
             elif(spell.extra_effect[0] == "armor_add_melee"):
@@ -299,7 +310,7 @@ def cast_spell(board,target_ID,spell):
 
 def spell_simulation(current_boards):
     cpt = 1
-    return_boards = []
+    return_boards = current_boards
     for i in range (len(current_boards)):
         update_armor_bonus(current_boards[i].char_list)
         precast(current_boards[i])
@@ -318,4 +329,5 @@ def spell_simulation(current_boards):
                                 return_boards[-1].instruction_list+=([[3,l,return_boards[-1].char_list[m].position]])
                                 cast_spell(return_boards[-1],m,return_boards[-1].spell_list[l])
                                 return_boards[-1].spell_list.pop(l)
+    print(return_boards)
     return return_boards

@@ -218,9 +218,9 @@ def reco_board(chars,hand):
                     stats = add_character(True)
                     if(len(stats)==3):
                         stats[2] =  int(stats[2])-  round(0.6 * float(stats[1]))
-                        chars[0]=(character("Arti_Ficelle","0",True,int(stats[0]),int(stats[0]),int(stats[1]),int(stats[2]),int(stats[2]),3,0,(i,j),{"passif_Justelame":True}))
+                        chars[0]=(character("Arti_Ficelle","0",True,int(stats[0]),int(stats[0]),int(stats[1]),int(stats[2]),int(stats[2]),3,6,(i,j),{"passif_Justelame":True}))
                     else:
-                        chars[0]=(character("Arti_Ficelle","0",True,int(stats[0]),int(stats[0]),0,int(stats[1]),int(stats[1]),3,0,(i,j),{"passif_Justelame":True})) 
+                        chars[0]=(character("Arti_Ficelle","0",True,int(stats[0]),int(stats[0]),0,int(stats[1]),int(stats[1]),3,6,(i,j),{"passif_Justelame":True})) 
                 pywinauto.mouse.release(button="left",coords=mouse_coordinates[str(i)+"."+str(j)])
 
     for i in range (7):

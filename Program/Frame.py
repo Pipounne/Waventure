@@ -2,7 +2,6 @@ import time
 from tkinter import *
 from tkinter import ttk
 import pywinauto
-import pygetwindow
 import win32gui,win32com.client
 from PIL import ImageGrab
 from Arti_Ficelle import *
@@ -74,27 +73,33 @@ def start_waventure():
         root.mainloop()
     else:
         pywinauto.mouse.click(button="left", coords=(700,825))
-        time.sleep(10)
+        time.sleep(12)
         combat_launched = True
         while(combat_launched):
+            #(33, 182, 255)
             image = ImageGrab.grab(bbox = (844,800,1000,900))
-            if(not notsamepixel(image.getpixel((100,50)),[(33, 182, 255)])):               
+            if(not notsamepixel(image.getpixel((100,50)),[(0, 0, 0)])):               
                 char_list = [1]
                 spellist = []
                 our_instructions = []
                 reco_board(char_list,spellist)
                 current_board = board("0",char_list,[[]],spellist,spells)
+                print(char_list)
                 launch_simulation([[current_board]],our_instructions,1)
                 print(our_instructions)
                 apply_instructions(our_instructions)
             image = ImageGrab.grab(bbox=(0,0,1343,882))
-            if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
-                combat_launched = False
-                time.sleep(10)
-                pywinauto.mouse.click(button="left", coords=(700,775))
-                time.sleep(15)
-                pywinauto.mouse.click(button="left", coords=(850,475))
-                pywinauto.mouse.click(button="left", coords=(850,375))
+            #if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
+            combat_launched = False
+            time.sleep(10)
+            pywinauto.mouse.click(button="left", coords=(700,775))
+            time.sleep(7)
+            pywinauto.mouse.move(coords=(762,470))
+            pywinauto.mouse.press(button="left", coords=(762,470))
+            time.sleep(0.2)
+            pywinauto.mouse.release(button="left", coords=(762,470))
+            time.sleep(0.2)
+            pywinauto.mouse.click(button="left", coords=(790,410))
                 
 
 Frame()
