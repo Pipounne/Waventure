@@ -1,5 +1,4 @@
 from numpy import *
-#import Read_Data
 
 #We create a character class to gather all the data extracted from the game
 class character:
@@ -329,5 +328,4 @@ def spell_simulation(current_boards):
                                 return_boards[-1].instruction_list+=([[3,l,return_boards[-1].char_list[m].position]])
                                 cast_spell(return_boards[-1],m,return_boards[-1].spell_list[l])
                                 return_boards[-1].spell_list.pop(l)
-    print(return_boards)
     return return_boards
