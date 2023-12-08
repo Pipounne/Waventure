@@ -114,11 +114,9 @@ def add_character(ally):
                     clean(image,i)
                     #image.show()
                     stats.append("")
-                    print("")
                 if(not notsamepixel(image.getpixel((i,9))[0:3],numbers_ally)):
                     number = number_reco(image,i)
                     image.putpixel((i,17),(0,255,0))
-                    print(number)
                     if(number == 1):
                         i += 1
                     elif(number == 2 ):
@@ -163,8 +161,6 @@ def add_character(ally):
                 if(not notsamepixel(image.getpixel((i,9))[0:3],numbers)):
                     number = number_reco(image,i)
                     image.putpixel((i,17),(0,255,0))
-                    print(number)
-                    print("")
                     if(number == 1):
                         i += 1
                     elif(number == 2 ):

@@ -28,7 +28,7 @@ def Frame():
     frm = ttk.Frame(root, padding=10)
     frm.grid()
     ttk.Label(frm, text="Waventure").grid(column=0, row=0)
-    start_button = ttk.Button(frm, text="Start", command=start_waventure,width=20).grid(column=0, row=1, padx=50, pady=20)
+    start_button = ttk.Button(frm, text="Start 3 rounds", command=lambda : start_waventure(3),width=20).grid(column=0, row=1, padx=50, pady=20)
     Quit_button = ttk.Button(frm, text="Quit", command=root.destroy,width=20).grid(column=0, row=2, padx=50, pady=20)
     if(found):
         ttk.Label(frm, text="Game found everyting is working").grid(column=0, row=3)
@@ -60,9 +60,8 @@ def apply_instructions(instructions):
             pywinauto.mouse.click(button="left",coords=mouse_coordinates["end_turn"])
             time.sleep(1)
 
-def start_waventure():
+def start_waventure(x):
     hwnd = win32gui.FindWindow(None, "Waven")
-    pywinauto.mouse.click(button="left", coords=(700,825))
     if (hwnd == 0):
         root = Tk()
         root.geometry("275x100")
@@ -72,33 +71,46 @@ def start_waventure():
         Quit_button = ttk.Button(frm, text="Quit", command=root.destroy,width=20).grid(column=0, row=2, padx=50, pady=20)
         root.mainloop()
     else:
-        pywinauto.mouse.click(button="left", coords=(700,825))
-        time.sleep(12)
-        combat_launched = True
-        while(combat_launched):
-            image = ImageGrab.grab(bbox = (844,800,1000,900))
-            if(not notsamepixel(image.getpixel((100,50)),[(33, 182, 255)])):               
-                char_list = [1]
-                spellist = []
-                our_instructions = []
-                reco_board(char_list,spellist)
-                current_board = board("0",char_list,[[]],spellist,spells)
-                print(char_list)
-                launch_simulation([[current_board]],our_instructions,1)
-                print(our_instructions)
-                apply_instructions(our_instructions)
-            image = ImageGrab.grab(bbox=(0,0,1343,882))
-            if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
-                time.sleep(10)
-                pywinauto.mouse.click(button="left", coords=(700,775))
-                time.sleep(7)
-                pywinauto.mouse.move(coords=(762,470))
-                pywinauto.mouse.press(button="left", coords=(762,470))
-                time.sleep(0.2)
-                pywinauto.mouse.release(button="left", coords=(762,470))
-                time.sleep(0.2)
-                pywinauto.mouse.click(button="left", coords=(790,410))
-                combat_launched = False
+        for i in range (x):
+            image = ImageGrab.grab(bbox = (0,0,1343,882))
+            if (notsamepixel(image.getpixel(((700,825))),[(63, 107, 219)])):
+                root = Tk()
+                root.geometry("275x100")
+                frm = ttk.Frame(root, padding=10)
+                frm.grid()
+                ttk.Label(frm, text="No challenge selected").grid(column=0, row=0)
+                Quit_button = ttk.Button(frm, text="Quit", command=root.destroy,width=20).grid(column=0, row=2, padx=50, pady=20)
+                root .attributes('-topmost',True)
+                root.mainloop()
+                break    
+            pywinauto.mouse.click(button="left", coords=(700,825))
+            pywinauto.mouse.click(button="left", coords=(700,825))
+            time.sleep(12)
+            combat_launched = True
+            while(combat_launched):
+                image = ImageGrab.grab(bbox = (844,800,1000,900))
+                if(not notsamepixel(image.getpixel((100,50)),[(33, 182, 255)])):               
+                    char_list = [1]
+                    spellist = []
+                    our_instructions = []
+                    reco_board(char_list,spellist)
+                    current_board = board("0",char_list,[[]],spellist,spells)
+                    print(char_list)
+                    launch_simulation([[current_board]],our_instructions,1)
+                    print(our_instructions)
+                    apply_instructions(our_instructions)
+                image = ImageGrab.grab(bbox=(0,0,1343,882))
+                if(not notsamepixel(image.getpixel((560,160)),[(0, 255, 248)])):
+                    time.sleep(10)
+                    pywinauto.mouse.click(button="left", coords=(700,775))
+                    time.sleep(7)
+                    pywinauto.mouse.move(coords=(762,470))
+                    pywinauto.mouse.press(button="left", coords=(762,470))
+                    time.sleep(0.2)
+                    pywinauto.mouse.release(button="left", coords=(762,470))
+                    time.sleep(0.2)
+                    pywinauto.mouse.click(button="left", coords=(790,410))
+                    time.sleep(1)
+                    combat_launched = False
                 
-
 Frame()

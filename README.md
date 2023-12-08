@@ -43,6 +43,8 @@ Now for spells, we have a critic pixel which color differs for each spell, allow
 # How to run
 
 - Install Waven from Ankama official website ( https://www.waven-game.com/en/download )
+- install all the librairies named in requirements.txt
+  If your using your native CMD and pip, type this command in the source folder : ```pip install -r requirements.txt```
 - log in with the appropriate character (please contact us if you need the test account)
 - Disable the fullscreen option if needed in your settings
 - launch frame.py with a python IDE such as VSCode or Spyder
