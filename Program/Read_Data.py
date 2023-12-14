@@ -38,11 +38,6 @@ def cleanup(image,x):
 
 def number_reco(image,x):
 
-    #for  i in range (3,15) :
-        #for j in range(x-4,x+6):
-            #print(image.getpixel((j,i))[0],end=' ')
-        #print("")
-
     #1
     if(not notsamepixel(image.getpixel((x,9)),numbers) and not notsamepixel(image.getpixel((x,13)),numbers) and not notsamepixel(image.getpixel((x,5)),numbers) and notsamepixel(image.getpixel((x+2,9)),numbers) and  notsamepixel(image.getpixel((x+2,13)),numbers) and  notsamepixel(image.getpixel((x+2,5)),numbers) and notsamepixel(image.getpixel((x-2,9)),numbers) and  notsamepixel(image.getpixel((x-2,13)),numbers)):
         #print("C'est un 1")
@@ -126,9 +121,6 @@ def add_character(ally):
                     elif(number > -1):
                         i += 4
                     stats[-1]+=str(number)
-                    #for j in range(image.height):
-                        #print(image.getpixel((i,j)))
-                    #print(i)
                 image.putpixel((i,9),(255,0,0))
                 i+=1
                     
@@ -170,9 +162,6 @@ def add_character(ally):
                     elif(number > -1):
                         i += 4
                     stats[-1]+=str(number)
-                    #for j in range(image.height):
-                        #print(image.getpixel((i,j)))
-                    #print(i)
                 image.putpixel((i,9),(255,0,0))
                 i+=1
                     
@@ -202,7 +191,6 @@ def reco_board(chars,hand):
                 goodpixel=snapshot.getpixel((120,66))
                 badpixel=snapshot.getpixel((1210,66))
                 if(badpixel[0]==255 and badpixel[1]==255 and badpixel[2] == 255):
-                    print("mezzant")
                     stats = add_character(False)
                     if(len(stats)==3):
                         chars.append(character("Foe"+str(cpt_foes),str(cpt_foes),False,int(stats[0]),int(stats[0]),int(stats[1]),int(stats[2]),int(stats[2]),3,0,(i,j)))
@@ -210,7 +198,6 @@ def reco_board(chars,hand):
                         chars.append(character("Foe"+str(cpt_foes),str(cpt_foes),False,int(stats[0]),int(stats[0]),0,int(stats[1]),int(stats[1]),3,0,(i,j)))  
                     cpt_foes += 1
                 elif(goodpixel[0]==255 and goodpixel[1]==255 and goodpixel[2] == 255):
-                    print("zentil")
                     stats = add_character(True)
                     if(len(stats)==3):
                         stats[2] =  int(stats[2])-  round(0.6 * float(stats[1]))
@@ -223,19 +210,5 @@ def reco_board(chars,hand):
         for cle,valeur in spells.items() :
             for j in range (len(valeur[1])):
                 if (not notsamepixel(image.getpixel(mouse_coordinates["spells."+str(i)]),valeur[1])):
-                    print(cle)
                     hand.append(spells[cle][0])
                     break
-        #print(image.getpixel(mouse_coordinates["spells."+str(i)]))
-
-    #image.putpixel((941,820),(255,0,0))
-    #image.putpixel((1210,66),(0,255,0))
-    #image.putpixel((120,66),(0,255,0))
-
-#image = Image.open(r"fond.png")
-#image = image.resize((image.width*4,image.height*4),resample=Image.BOX)
-#image.show()
-#text = pytesseract.image_to_string(image)
-#print(text[:-1])
-
-#reco_board([],[])

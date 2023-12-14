@@ -104,6 +104,7 @@ def melee_count(position,char_list,ID):
                 cpt +=1
     return cpt
 
+#create all simulations
 def launch_simulation(previous_boards,return_tab,n = 1):
     if(n>0):    
         all_boards = move_simulation(previous_boards[-1])
@@ -125,6 +126,7 @@ def launch_simulation(previous_boards,return_tab,n = 1):
                 for y in range (len(best_board.instruction_list[x])):
                     return_tab[x].append(best_board.instruction_list[x][y])
 
+#Calcul the sscore of a given board
 def score_calcul(board,newboard) :
     result = 0
     for i in range(len(newboard.char_list)):
@@ -267,7 +269,6 @@ def precast(board):
     for i in range(len(board.spell_list)):
         if(board.spell_list[i].extra_effect=="cost_reduce_melee"):
             board.spell_list[i].cost = board.spell_list[i].extra_effet[1]-melee_count(board.char_list[0].position,board.char_list,0)
-            print(board.spell_list[i].cost)
         elif(board.spell_list[i].extra_effect=="dmg_equal_armor"):
             board.spell_list[i].dmg = board.char_list[0].armor
         elif(board.spell_list[i].extra_effect=="dmg_equal_atk"):
@@ -275,7 +276,6 @@ def precast(board):
         elif(board.spell_list[i].extra_effect==" dmg_equal_atk_cost_reduce_melee"):
             board.spell_list[i].dmg = board.char_list[0].atk
             board.spell_list[i].cost = board.spell_list[i].extra_effet[1]-melee_count(board.char_list[0].position,board.char_list,0)
-            print(board.spell_list[i].cost)
         elif(board.spell_list[i].extra_effect=="dmg_equal_atk_stack_melee"):
             board.spell_list[i].dmg = (board.char_list[0].atk/4)*board.spell_list[i].extra_effet[1] + board.char_list[0].atk
             
